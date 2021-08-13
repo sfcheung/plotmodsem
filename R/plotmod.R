@@ -33,8 +33,6 @@
 #' }
 #' @export
 
-globalVariables(c("a", "b"))
-
 plotmod <- function(fit, y, x, w, xw,
                             x_label,
                             w_label,
