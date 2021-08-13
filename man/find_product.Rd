@@ -2,28 +2,46 @@
 % Please edit documentation in R/find_product.R
 \name{find_product}
 \alias{find_product}
-\title{One line title}
+\alias{find_all_products}
+\title{Find product terms}
 \usage{
 find_product(data, target)
+
+find_all_products(data, expand = TRUE)
 }
 \arguments{
-\item{data}{Argument description.}
+\item{data}{The data frame to be searched.}
 
-\item{target}{Arguments to be passed to the model specific MASEM function.}
+\item{target}{The column to be checked if it is a product of other columns.}
+
+\item{expand}{Whether the function will attempt to expand a lower order
+term to their components. Default is \code{TRUE}.}
 }
 \value{
-Specify what are returned.
+\link{find_all_products} returns a named list. For each element, the name is the
+column name of a product
+term, and the content
+is a vector of the names of the columns used for form the product term.
+If no column is a product of other column, it returns a names list of zero
+length.
+
+\link{find_product} returns a vector of two elements. If the target column is a product
+of two other columns, this vector contains the names of these two columsn.
+Otherwise, this is a vector of \code{NA}s.
 }
 \description{
-One line description
+Find columns in a data frame or matrix that are the products
+of two or more other columns.
 }
 \details{
-Details
+This function find probable product terms by comparing its values
+to the products of other columns. It was developed for identifying
+columns that are the products of two columns. It may be able to
+identify columns that are the products of three or more columns
+but there is no guarantee.
 }
 \examples{
 \dontrun{
+# To be prepared
 }
-}
-\seealso{
-\code{\link{functionname}}
 }
