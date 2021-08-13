@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • plotmodsem</title>
+<title>Find product terms — find_product • plotmodsem</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Find product terms — find_product" />
+<meta property="og:description" content="Find columns in a data frame or matrix that are the products
+of two or more other columns." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -103,48 +105,65 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Find product terms</h1>
+    
+    <div class="hidden name"><code>find_product.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Find columns in a data frame or matrix that are the products
+of two or more other columns.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>find_product</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>target</span><span class='op'>)</span>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="find_product.html">find_product()</a></code> <code><a href="find_product.html">find_all_products()</a></code> </p>
-        </td>
-        <td><p>Find product terms</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_mod_sem.html">sample_mod_sem</a></code> </p>
-        </td>
-        <td><p>Sample dataset for testing</p></td>
-      </tr>
-    </tbody>
+<span class='fu'>find_all_products</span><span class='op'>(</span><span class='va'>data</span>, expand <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>The data frame to be searched.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>The column to be checked if it is a product of other columns.</p></td>
+    </tr>
+    <tr>
+      <th>expand</th>
+      <td><p>Whether the function will attempt to expand a lower order
+term to their components. Default is <code>TRUE</code>.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>find_all_products returns a named list. For each element, the name is the
+column name of a product
+term, and the content
+is a vector of the names of the columns used for form the product term.
+If no column is a product of other column, it returns a names list of zero
+length.</p>
+<p>find_product returns a vector of two elements. If the target column is a product
+of two other columns, this vector contains the names of these two columsn.
+Otherwise, this is a vector of <code>NA</code>s.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function find probable product terms by comparing its values
+to the products of other columns. It was developed for identifying
+columns that are the products of two columns. It may be able to
+identify columns that are the products of three or more columns
+but there is no guarantee.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># To be prepared</span>
+<span class='op'>}</span>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
