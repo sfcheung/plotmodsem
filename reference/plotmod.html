@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • plotmodsem</title>
+<title>Plot the moderation effect in a path model — plotmod • plotmodsem</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Plot the moderation effect in a path model — plotmod" />
+<meta property="og:description" content="Plot the moderation effect in a path model" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -103,60 +104,101 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Plot the moderation effect in a path model</h1>
+    
+    <div class="hidden name"><code>plotmod.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Plot the moderation effect in a path model</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>plotmod</span><span class='op'>(</span>
+  <span class='va'>fit</span>,
+  <span class='va'>y</span>,
+  <span class='va'>x</span>,
+  <span class='va'>w</span>,
+  <span class='va'>xw</span>,
+  <span class='va'>x_label</span>,
+  <span class='va'>w_label</span>,
+  <span class='va'>y_label</span>,
+  <span class='va'>title</span>,
+  a_shift <span class='op'>=</span> <span class='fl'>0</span>,
+  expansion <span class='op'>=</span> <span class='fl'>0.1</span>
+<span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="find_product.html">find_product()</a></code> <code><a href="find_product.html">find_all_products()</a></code> </p>
-        </td>
-        <td><p>Find product terms</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotmod.html">plotmod()</a></code> </p>
-        </td>
-        <td><p>Plot the moderation effect in a path model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_mod_sem.html">sample_mod_sem</a></code> </p>
-        </td>
-        <td><p>Sample dataset for testing</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="semlbci-package.html">semlbci-package</a></code> </p>
-        </td>
-        <td><p>plotmodsem: Plotting moderation effects in path models</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>fit</th>
+      <td><p>The output from <a href='https://rdrr.io/pkg/lavaan/man/lavaan.html'>lavaan::lavaan</a> or its wrapper, such as
+<a href='https://rdrr.io/pkg/lavaan/man/sem.html'>lavaan::sem</a>.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>Character. The name of the outcome variable as in the data set in <code>fit</code>.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Character. The name of the focal variable as in the data set in <code>fit</code>.</p></td>
+    </tr>
+    <tr>
+      <th>w</th>
+      <td><p>Character. The name of the moderator as in the data set in <code>fit</code>.</p></td>
+    </tr>
+    <tr>
+      <th>xw</th>
+      <td><p>Charcter. The name of the product term, <code>x * w</code>. If not supplied,
+The function will try to find it in the data set.</p></td>
+    </tr>
+    <tr>
+      <th>x_label</th>
+      <td><p>The label for the X-axis. Default is the vlaues of <code>x</code>.</p></td>
+    </tr>
+    <tr>
+      <th>w_label</th>
+      <td><p>The label for the legend for the lines. Default is the value of<code>w</code>.</p></td>
+    </tr>
+    <tr>
+      <th>y_label</th>
+      <td><p>The label for the Y-axis. Default is the value of <code>y</code>.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>The title of the graph. If not supplied, will be generated from the variable
+names.</p></td>
+    </tr>
+    <tr>
+      <th>a_shift</th>
+      <td><p>Default is 0. Can be ignored for now.</p></td>
+    </tr>
+    <tr>
+      <th>expansion</th>
+      <td><p>How much tha lower and upper limits of the axis will be adjusted.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A ggplot2 graph.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function extracts the information stored
+in the <code>lavaan</code> fit object to plot a two-line
+graph, one for the relation between the focal variale (<code>x</code>) and
+the outcome variable (<code>y</code>) when the moderator (<code>w</code>) is one stanard
+deviation below mean, and one when the moderator is one standard
+deviation above mean.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># To be prepared</span>
+<span class='op'>}</span>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
