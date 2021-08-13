@@ -10,7 +10,8 @@
 #'
 #' @param data Argument description.
 #' @param target Arguments to be passed to the model specific MASEM function.
-#'
+#' @param expand
+
 #' @seealso \code{\link{functionname}}
 #'
 #' @examples
@@ -41,10 +42,15 @@ find_product <- function(data, target) {
 
 #' @export
 
-find_all_products <- function(data) {
-    out <- sapply(colnames(data), find_match, data = datm,
-                    USE.NAMES = TRUE,
-                    simplify = FALSE)
+find_all_products <- function(data, expand = TRUE) {
+    out <- sapply(colnames(data),
+                  find_product, data = data,
+                  USE.NAMES = TRUE,
+                  simplify = FALSE)
+    out <- out[sapply(out, function(x) !all(is.na(x)))]
+    if (expand) {
+        out <- expand2lower(out)
+      }
     out
   }
 
@@ -61,8 +67,8 @@ expand2lower_i <- function(x, full_list) {
 
 expand2lower <- function(full_list) {
     out <- full_list
-    while (any(unlist(out) %in% names(check))) {
-        out <- sapply(out, find_lower_i, full_list = out)
+    while (any(unlist(out) %in% names(full_list))) {
+        out <- sapply(out, expand2lower_i, full_list = out)
       }
     out
   }
