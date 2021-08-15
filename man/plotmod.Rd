@@ -15,7 +15,8 @@ plotmod(
   y_label,
   title,
   a_shift = 0,
-  expansion = 0.1
+  expansion = 0.1,
+  standardized = FALSE
 )
 }
 \arguments{
@@ -43,6 +44,10 @@ names.}
 \item{a_shift}{Default is 0. Can be ignored for now.}
 
 \item{expansion}{How much tha lower and upper limits of the axis will be adjusted.}
+
+\item{standardized}{Logical. Plot the moderation effect in standardized metric. All three
+variables, \code{x}, \code{w}, and \code{y} will be standardized. Default
+is \code{FALSE}}
 }
 \value{
 A \link{ggplot2} graph.
