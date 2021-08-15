@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotmodsem</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -126,7 +126,9 @@
   <span class='va'>y_label</span>,
   <span class='va'>title</span>,
   a_shift <span class='op'>=</span> <span class='fl'>0</span>,
-  expansion <span class='op'>=</span> <span class='fl'>0.1</span>
+  expansion <span class='op'>=</span> <span class='fl'>0.1</span>,
+  standardized <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -178,6 +180,16 @@ names.</p></td>
     <tr>
       <th>expansion</th>
       <td><p>How much tha lower and upper limits of the axis will be adjusted.</p></td>
+    </tr>
+    <tr>
+      <th>standardized</th>
+      <td><p>Logical. Plot the moderation effect in standardized metric. All three
+variables, <code>x</code>, <code>w</code>, and <code>y</code> will be standardized. Default
+is <code>FALSE</code></p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>Number of decimal digits to print. Default is 3.</p></td>
     </tr>
     </table>
 
