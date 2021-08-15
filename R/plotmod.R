@@ -26,6 +26,10 @@
 #'               names.
 #' @param a_shift Default is 0. Can be ignored for now.
 #' @param expansion How much tha lower and upper limits of the axis will be adjusted.
+#' @param standardized Logical. Plot the moderation effect in standardized metric. All three
+#'                     variables, `x`, `w`, and `y` will be standardized. Default
+#'                     is `FALSE`
+#' @param digits Number of decimal digits to print. Default is 3.
 #'
 #' @examples
 #' \dontrun{
@@ -39,7 +43,10 @@ plotmod <- function(fit, y, x, w, xw,
                             y_label,
                             title,
                             a_shift = 0,
-                            expansion = .1) {
+                            expansion = .1,
+                            standardized = FALSE,
+                            digits = 3
+                    ) {
     if (!lavaan::lavInspect(fit, "meanstructure")) {
         stop("The fitted model does no have interecepts (meanstructure).")
       }
@@ -47,8 +54,14 @@ plotmod <- function(fit, y, x, w, xw,
     if (missing(w_label)) w_label <- w
     if (missing(y_label)) y_label <- y
     if (missing(title)) {
-        title <- paste0("The Moderation Effecct of ", w,
-                        " on ", x, "'s effect on ", y)
+        if (standardized) {
+            title <- paste0("The Moderation Effect of ", w,
+                            " on ", x, "'s effect on ", y,
+                            " (Standardized)")
+          } else {
+            title <- paste0("The Moderation Effect of ", w,
+                            " on ", x, "'s effect on ", y)
+          }
       }
     if (missing(xw)) {
         all_prods <- find_all_products(lavaan::lavInspect(fit, "data"))
@@ -72,17 +85,37 @@ plotmod <- function(fit, y, x, w, xw,
         xw <- names(tmp[tmp])
       }
     par_t <- lavaan::parameterEstimates(fit)
-    x_sd <- par_t[par_t$lhs == x & par_t$rhs == x, "est"]
-    w_sd <- par_t[par_t$lhs == w & par_t$rhs == w, "est"]
-    x_mean <- par_t[par_t$lhs == x & par_t$op == "~1", "est"]
-    w_mean <- par_t[par_t$lhs == w & par_t$op == "~1", "est"]
+    x_sd_raw <- sqrt(lavaan::lavInspect(fit, "cov.ov")[x, x])
+    w_sd_raw <- sqrt(lavaan::lavInspect(fit, "cov.ov")[w, w])
+    y_sd_raw <- sqrt(lavaan::lavInspect(fit, "cov.ov")[y, y])
+    x_mean_raw <- lavaan::lavInspect(fit, "mean.ov")[x]
+    w_mean_raw <- lavaan::lavInspect(fit, "mean.ov")[w]
+    bx_raw <- par_t[par_t$lhs == y & par_t$rhs == x, "est"]
+    bw_raw <- par_t[par_t$lhs == y & par_t$rhs == w, "est"]
+    bxw_raw <- par_t[par_t$lhs == y & par_t$rhs == xw, "est"]
+    if (standardized) {
+        std_t <- lavaan::standardizedSolution(fit)
+        x_sd <- 1
+        w_sd <- 1
+        x_mean <- 0
+        w_mean <- 0
+        bx <- (bx_raw + bxw_raw * w_mean_raw) * x_sd_raw / y_sd_raw
+        bw <- (bw_raw + bxw_raw * x_mean_raw) * w_sd_raw / y_sd_raw
+        bxw <- par_t[par_t$lhs == y & par_t$rhs == xw, "est"] *
+                      x_sd_raw * w_sd_raw / y_sd_raw
+      } else {
+        x_sd <- x_sd_raw
+        w_sd <- w_sd_raw
+        x_mean <- x_mean_raw
+        w_mean <- w_mean_raw
+        bx <- bx_raw
+        bw <- bw_raw
+        bxw <- bxw_raw
+      }
     x_lo <- x_mean - x_sd
     x_hi <- x_mean + x_sd
     w_lo <- w_mean - w_sd
     w_hi <- w_mean + w_sd
-    bx <- par_t[par_t$lhs == y & par_t$rhs == x, "est"]
-    bw <- par_t[par_t$lhs == y & par_t$rhs == w, "est"]
-    bxw <- par_t[par_t$lhs == y & par_t$rhs == xw, "est"]
     dat_plot <- data.frame(w = c("Low", "High"),
                            a = c(a_shift + bw * w_lo,
                                  a_shift + bw * w_hi),
@@ -97,6 +130,15 @@ plotmod <- function(fit, y, x, w, xw,
     y_max <- max(y_x_lo_w_lo, y_x_lo_w_hi, y_x_hi_w_lo, y_x_hi_w_hi)
     y_range <- y_max - y_min
     x_range <- x_hi - x_lo
+    b_format <- paste0("%.", digits, "f")
+    subtxt <- paste0(w, " low: ", x, " effect = ",
+                     sprintf(b_format,
+                             dat_plot[dat_plot$w == "Low", "b"]),
+                     "; ",
+                     w, " high: ", x, " effect = ",
+                     sprintf(b_format,
+                             dat_plot[dat_plot$w == "High", "b"])
+                     )
     ggplot2::ggplot() +
       ggplot2::scale_x_continuous(name = x_label,
                                   limits = c(x_lo - expansion * x_range,
@@ -111,6 +153,7 @@ plotmod <- function(fit, y, x, w, xw,
                                          linetype = factor(w)),
                                          size = 1) +
       ggplot2::labs(title = title,
+                    subtitle = subtxt,
                     caption = "Low: 1 SD below mean; Hi: 1 SD above mean") +
       ggplot2::theme(axis.text.y = ggplot2::element_blank())
   }
