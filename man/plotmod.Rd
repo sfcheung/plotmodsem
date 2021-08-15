@@ -16,7 +16,8 @@ plotmod(
   title,
   a_shift = 0,
   expansion = 0.1,
-  standardized = FALSE
+  standardized = FALSE,
+  digits = 3
 )
 }
 \arguments{
@@ -48,6 +49,8 @@ names.}
 \item{standardized}{Logical. Plot the moderation effect in standardized metric. All three
 variables, \code{x}, \code{w}, and \code{y} will be standardized. Default
 is \code{FALSE}}
+
+\item{digits}{Number of decimal digits to print. Default is 3.}
 }
 \value{
 A \link{ggplot2} graph.

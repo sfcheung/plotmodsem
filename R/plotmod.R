@@ -29,6 +29,7 @@
 #' @param standardized Logical. Plot the moderation effect in standardized metric. All three
 #'                     variables, `x`, `w`, and `y` will be standardized. Default
 #'                     is `FALSE`
+#' @param digits Number of decimal digits to print. Default is 3.
 #'
 #' @examples
 #' \dontrun{
@@ -43,7 +44,9 @@ plotmod <- function(fit, y, x, w, xw,
                             title,
                             a_shift = 0,
                             expansion = .1,
-                            standardized = FALSE) {
+                            standardized = FALSE,
+                            digits = 3
+                    ) {
     if (!lavaan::lavInspect(fit, "meanstructure")) {
         stop("The fitted model does no have interecepts (meanstructure).")
       }
@@ -127,6 +130,15 @@ plotmod <- function(fit, y, x, w, xw,
     y_max <- max(y_x_lo_w_lo, y_x_lo_w_hi, y_x_hi_w_lo, y_x_hi_w_hi)
     y_range <- y_max - y_min
     x_range <- x_hi - x_lo
+    b_format <- paste0("%.", digits, "f")
+    subtxt <- paste0(w, " low: ", x, " effect = ",
+                     sprintf(b_format,
+                             dat_plot[dat_plot$w == "Low", "b"]),
+                     "; ",
+                     w, " high: ", x, " effect = ",
+                     sprintf(b_format,
+                             dat_plot[dat_plot$w == "High", "b"])
+                     )
     ggplot2::ggplot() +
       ggplot2::scale_x_continuous(name = x_label,
                                   limits = c(x_lo - expansion * x_range,
@@ -141,6 +153,7 @@ plotmod <- function(fit, y, x, w, xw,
                                          linetype = factor(w)),
                                          size = 1) +
       ggplot2::labs(title = title,
+                    subtitle = subtxt,
                     caption = "Low: 1 SD below mean; Hi: 1 SD above mean") +
       ggplot2::theme(axis.text.y = ggplot2::element_blank())
   }
