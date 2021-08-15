@@ -131,11 +131,11 @@ plotmod <- function(fit, y, x, w, xw,
     y_range <- y_max - y_min
     x_range <- x_hi - x_lo
     b_format <- paste0("%.", digits, "f")
-    subtxt <- paste0(w, " low: ", x, " effect = ",
+    subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "Low", "b"]),
                      "; ",
-                     w, " high: ", x, " effect = ",
+                     w_label, " high: ", x_label, " effect = ",
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "High", "b"])
                      )
