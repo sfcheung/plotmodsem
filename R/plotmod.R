@@ -46,7 +46,7 @@
 #'                  standard deviation of the moderator, "sd". If equal to
 #'                  "percentile", then percentiles of the moderator in the
 #'                  dataset is used.
-#' @param w_percentiles If `w_method` is `percentile`, then this argument
+#' @param w_percentiles If `w_method` is "percentile", then this argument
 #'                      specifies the two percentiles to be used, divided by 100.
 #'                        It must be a
 #'                      vector of two numbers. The default is `c(.16, .84)`,
@@ -59,7 +59,7 @@
 #'                  standard deviation of the focal variable, "sd". If equal to
 #'                  "percentile", then percentiles of the focal variable in the
 #'                  dataset is used.
-#' @param x_percentiles If `x_method` is `percentile`, then this argument
+#' @param x_percentiles If `x_method` is "percentile", then this argument
 #'                      specifies the two percentiles to be used, divided by 100.
 #'                        It must be a
 #'                      vector of two numbers. The default is `c(.16, .84)`,
@@ -67,7 +67,7 @@
 #'                      which corresponds approximately
 #'                      to one SD below and above mean for a
 #'                      normal distributoin, respectively.
-#' @param w_sd_to_percentiles If `w_method` is `percentile` and this argument is
+#' @param w_sd_to_percentiles If `w_method` is "percentile" and this argument is
 #'                            set to a number, this number will be used to
 #'                            to determine the percentiles to be used. The
 #'                            lower percentile is the percentile in a normal
@@ -79,7 +79,7 @@
 #'                            `w_sd_to_percentiles` is set to 1, then the lower
 #'                            and upper percentiles are 16th and 84th,
 #'                            respectively.
-#' @param x_sd_to_percentiles If `x_method` is `percentile` and this argument is
+#' @param x_sd_to_percentiles If `x_method` is "percentile" and this argument is
 #'                            set to a number, this number will be used to
 #'                            to determine the percentiles to be used. The
 #'                            lower percentile is the percentile in a normal
@@ -91,6 +91,19 @@
 #'                            `x_sd_to_percentiles` is set to 1, then the lower
 #'                            and upper percentiles are 16th and 84th,
 #'                            respectively.
+#' @param plot_x_vlines If supplied, vertical lines to indicate the levels of
+#'                       the focal variable will be plotted. This should be a 
+#'                       vector of numbers, indicating the levels to be plotted.
+#'                       How these numbers are interpreted depends on
+#'                       `x_vlines_unit`.
+#' @param x_vlines_unit If equal to "sd", then the values of `plot_x_vlines`
+#'                       will be interpreted as the deviation from the mean.
+#'                       For example, 1 is 1 SD above mean, and -1 is 1 SD
+#'                       below mean. If equal to "percentile", then the numbers,
+#'                       mulipltied by 100, are the precentiles. For example,
+#'                       .25 is the 25th percentile, and .75 is the 75th
+#'                       percentile.
+#'                      
 #'
 #' @examples
 #' \dontrun{
@@ -114,7 +127,9 @@ plotmod <- function(fit, y, x, w, xw,
                             x_method = "sd",
                             x_percentiles = c(.16, .84),
                             w_sd_to_percentiles,
-                            x_sd_to_percentiles
+                            x_sd_to_percentiles,
+                            plot_x_vlines,
+                            x_vlines_unit = "sd"
                     ) {
     w_method <- tolower(w_method)
     if (!w_method %in% c("sd", "percentile")) {
@@ -138,6 +153,13 @@ plotmod <- function(fit, y, x, w, xw,
           }
         if (x_percentiles[1] > x_percentiles[2]) {
             stop("The first perecentile is x_percentiles is higher than the second percentile.")
+          }
+      }
+    x_vlines_unit <- tolower(x_vlines_unit)
+    if ((x_vlines_unit == "percentile") & !missing(plot_x_vlines)) {
+        if (inherits(tryCatch(fit_data <- lavaan::lavInspect(fit, "data"),
+                              error = function(e) e), "simpleError")) {
+            stop('x_vlines_unit = "percentile" but raw data cannot be retrieved from fit.')
           }
       }
     if (!lavaan::lavInspect(fit, "meanstructure")) {
@@ -294,7 +316,7 @@ plotmod <- function(fit, y, x, w, xw,
                           "SD below mean; Hi: ",
                           w_from_mean_in_sd, " SD above mean")
       }
-    ggplot2::ggplot() +
+    out <- ggplot2::ggplot() +
       ggplot2::scale_x_continuous(name = x_label,
                                   limits = c(x_lo - expansion * x_range,
                                              x_hi + expansion * x_range)) +
@@ -311,4 +333,30 @@ plotmod <- function(fit, y, x, w, xw,
                     subtitle = subtxt,
                     caption = cap_txt) +
       ggplot2::theme(axis.text.y = ggplot2::element_blank())
+    if (!missing(plot_x_vlines)) {
+        if (x_vlines_unit == "sd") {
+            x_vline_levels <- plot_x_vlines * x_sd + x_mean
+          }
+        if (x_vlines_unit == "percentile") {
+            x_vline_levels <- stats::quantile(fit_data[, x], plot_x_vlines)
+            if (standardized) {
+                x_vline_levels <- (x_vline_levels - x_mean_raw) / x_sd_raw
+              }
+          }
+        for (i in x_vline_levels) {
+            out <- out + ggplot2::geom_vline(
+                          xintercept = i,
+                          linetype = "dotted",
+                          size = .5)
+            out <- out + ggplot2::annotate(
+                          "text",
+                          x = i,
+                          y = y_min - expansion * y_range +
+                                .1 * (y_range * 2 * expansion),
+                          label = paste0(x_label, "=",
+                                    sprintf(b_format, i)),
+                          size = 4)
+          }
+      }
+    out
   }

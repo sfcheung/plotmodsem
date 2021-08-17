@@ -17,6 +17,10 @@
   `x_sd_to_percentiles` and/or `w_sd_to_percentiles` to find the percentiles 
   using a number of SD above or below mean in a normal distribution.
 
+- Added `plot_x_vlines` and `x_vlines_unit` to `plotmod`. Users can add 
+  one or more vertical lines for selected level of the focal variables.
+  The levels can be specified as deviation from mean in SD or percentiles.
+
 # plotmodsem 0.0.2
 
 ## New Features

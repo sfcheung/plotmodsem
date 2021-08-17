@@ -23,7 +23,11 @@ plotmod(
   w_method = "sd",
   w_percentiles = c(0.16, 0.84),
   x_method = "sd",
-  x_percentiles = c(0.16, 0.84)
+  x_percentiles = c(0.16, 0.84),
+  w_sd_to_percentiles,
+  x_sd_to_percentiles,
+  plot_x_vlines,
+  x_vlines_unit = "sd"
 )
 }
 \arguments{
@@ -77,7 +81,7 @@ standard deviation of the moderator, "sd". If equal to
 "percentile", then percentiles of the moderator in the
 dataset is used.}
 
-\item{w_percentiles}{If \code{w_method} is \code{percentile}, then this argument
+\item{w_percentiles}{If \code{w_method} is "percentile", then this argument
 specifies the two percentiles to be used, divided by 100.
 It must be a
 vector of two numbers. The default is \code{c(.16, .84)},
@@ -92,7 +96,7 @@ standard deviation of the focal variable, "sd". If equal to
 "percentile", then percentiles of the focal variable in the
 dataset is used.}
 
-\item{x_percentiles}{If \code{x_method} is \code{percentile}, then this argument
+\item{x_percentiles}{If \code{x_method} is "percentile", then this argument
 specifies the two percentiles to be used, divided by 100.
 It must be a
 vector of two numbers. The default is \code{c(.16, .84)},
@@ -100,6 +104,46 @@ the 16th and 84th percentiles,
 which corresponds approximately
 to one SD below and above mean for a
 normal distributoin, respectively.}
+
+\item{w_sd_to_percentiles}{If \code{w_method} is "percentile" and this argument is
+set to a number, this number will be used to
+to determine the percentiles to be used. The
+lower percentile is the percentile in a normal
+distribution
+that is \code{w_sd_to_percentiles} SD below the mean.
+The upper percentile is the percentil in a normal
+distribution that is \code{w_sd_to_percentiles} SD
+above the mean. Therefore, if
+\code{w_sd_to_percentiles} is set to 1, then the lower
+and upper percentiles are 16th and 84th,
+respectively.}
+
+\item{x_sd_to_percentiles}{If \code{x_method} is "percentile" and this argument is
+set to a number, this number will be used to
+to determine the percentiles to be used. The
+lower percentile is the percentile in a normal
+distribution
+that is \code{x_sd_to_percentiles} SD below the mean.
+The upper percentile is the percentil in a normal
+distribution that is \code{x_sd_to_percentiles} SD
+above the mean. Therefore, if
+\code{x_sd_to_percentiles} is set to 1, then the lower
+and upper percentiles are 16th and 84th,
+respectively.}
+
+\item{plot_x_vlines}{If supplied, vertical lines to indicate the levels of
+the focal variable will be plotted. This should be a
+vector of numbers, indicating the levels to be plotted.
+How these numbers are interpreted depends on
+\code{x_vlines_unit}.}
+
+\item{x_vlines_unit}{If equal to "sd", then the values of \code{plot_x_vlines}
+will be interpreted as the deviation from the mean.
+For example, 1 is 1 SD above mean, and -1 is 1 SD
+below mean. If equal to "percentile", then the numbers,
+mulipltied by 100, are the precentiles. For example,
+.25 is the 25th percentile, and .75 is the 75th
+percentile.}
 }
 \value{
 A \link{ggplot2} graph.
