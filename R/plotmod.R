@@ -283,12 +283,14 @@ plotmod <- function(fit, y, x, w, xw,
                              dat_plot[dat_plot$w == "High", "b"])
                      )
     if (w_method == "percentile") {
-        cap_txt <- paste0("Low: ", 100 * w_percentiles[1],
+        cap_txt <- paste0(w_label, " levels: ",
+                          "Low: ", 100 * w_percentiles[1],
                           "th percentile; Hi: ",
                           100*w_percentiles[2], "th percentile")
       }
     if (w_method == "sd") {
-        cap_txt <- paste0("Low: ", w_from_mean_in_sd,
+        cap_txt <- paste0(w_label, " levels: ",
+                          "Low: ", w_from_mean_in_sd,
                           "SD below mean; Hi: ",
                           w_from_mean_in_sd, " SD above mean")
       }
