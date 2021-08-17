@@ -1,13 +1,36 @@
+# plotmodsem 0.0.3
+
+## New Features
+
+- `plotmod` accepts unquoted names. E.g., `x = iv` and `x = "iv"` both works.
+
+- Added `x_from_mean_in_sd` and `w_from_mean_in_sd` to `plotmod`. Users can 
+  define `high` and `low` in terms of SD. Defaults are 1.
+
+- Added `x_method`, `w_method`, `x_percentiles` and `w_percentiles` to `plotmod`.
+  Users can define "high" and "low" in terms of percentiles for the moderator
+  by setting `w_method = "percentile"` (for the focal variable, set 
+  `x_method = "percentile"`).
+
+- Added `x_sd_to_percentiles` and `w_sd_to_percentiles` to `plotmod`.
+  If percentiles are used to define "high" and "low", users can set 
+  `x_sd_to_percentiles` and/or `w_sd_to_percentiles` to find the percentiles 
+  using a number of SD above or below mean in a normal distribution.
+
+- Added `plot_x_vlines` and `x_vlines_unit` to `plotmod`. Users can add 
+  one or more vertical lines for selected level of the focal variables.
+  The levels can be specified as deviation from mean in SD or percentiles.
+
 # plotmodsem 0.0.2
 
-## New features
+## New Features
 
-- Can plot the moderaiton effect in standardized metric. The pattern of lines
+- Can plot the moderation effect in standardized metric. The pattern of lines
   is the same, standardized or not, but the scales are different.
 
 - Print the conditional effects as a subtitle.
 
-## Bug fix
+## Bug Fix
 
 - Fix the bug that variances instead of standard deivations are retrieved.
 
