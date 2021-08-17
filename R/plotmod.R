@@ -41,6 +41,32 @@
 #'                          "high" for the focal variable. Default is 1.
 #' @param w_from_mean_in_sd How many SD from mean is used to define "low" and
 #'                          "high" for the moderator. Default is 1.
+#' @param w_method How to define "high" and "low" for the moderator levels.
+#'                  Default is in terms of the
+#'                  standard deviation of the moderator, "sd". If equal to
+#'                  "percentile", then percentiles of the moderator in the
+#'                  dataset is used.
+#' @param w_percentiles If `w_method` is `percentile`, then this argument
+#'                      specifies the two percentiles to be used, divided by 100.
+#'                        It must be a
+#'                      vector of two numbers. The default is `c(.16, .84)`,
+#'                      the 16th and 84th percentiles,
+#'                      which corresponds approximately
+#'                      to one SD below and above mean for a
+#'                      normal distributoin, respectively.
+#' @param x_method How to define "high" and "low" for the focal variable levels.
+#'                  Default is in terms of the
+#'                  standard deviation of the focal variable, "sd". If equal to
+#'                  "percentile", then percentiles of the focal variable in the
+#'                  dataset is used.
+#' @param x_percentiles If `x_method` is `percentile`, then this argument
+#'                      specifies the two percentiles to be used, divided by 100.
+#'                        It must be a
+#'                      vector of two numbers. The default is `c(.16, .84)`,
+#'                      the 16th and 84th percentiles,
+#'                      which corresponds approximately
+#'                      to one SD below and above mean for a
+#'                      normal distributoin, respectively.
 #'
 #' @examples
 #' \dontrun{
@@ -58,8 +84,28 @@ plotmod <- function(fit, y, x, w, xw,
                             standardized = FALSE,
                             digits = 3,
                             x_from_mean_in_sd = 1,
-                            w_from_mean_in_sd = 1
+                            w_from_mean_in_sd = 1,
+                            w_method = "sd",
+                            w_percentiles = c(.16, .84),
+                            x_method = "sd",
+                            x_percentiles = c(.16, .84)
                     ) {
+    w_method <- tolower(w_method)
+    if (!w_method %in% c("sd", "percentile")) {
+        stop('The argument w_method must either be "sd" or "percentile".')
+      }
+    if ((w_method == "percentile") | (x_method == "percentile")) {
+        if (inherits(tryCatch(fit_data <- lavaan::lavInspect(fit, "data"),
+                              error = function(e) e), "simpleError")) {
+            stop('w_method and/or x_method = "percentile" but raw data cannot be retrieved from fit.')
+          }
+        if (w_percentiles[1] > w_percentiles[2]) {
+            stop("The first perecentile in w_percentiles is higher than the second percentile.")
+          }
+        if (x_percentiles[1] > x_percentiles[2]) {
+            stop("The first perecentile is x_percentiles is higher than the second percentile.")
+          }
+      }
     if (!lavaan::lavInspect(fit, "meanstructure")) {
         stop("The fitted model does no have interecepts (meanstructure).")
       }
@@ -155,10 +201,30 @@ plotmod <- function(fit, y, x, w, xw,
         bw <- bw_raw
         bxw <- bxw_raw
       }
-    x_lo <- x_mean - x_from_mean_in_sd * x_sd
-    x_hi <- x_mean + x_from_mean_in_sd * x_sd
-    w_lo <- w_mean - w_from_mean_in_sd * w_sd
-    w_hi <- w_mean + w_from_mean_in_sd * w_sd
+    if (x_method == "sd") {
+        x_lo <- x_mean - x_from_mean_in_sd * x_sd
+        x_hi <- x_mean + x_from_mean_in_sd * x_sd
+      } else {
+        x_percs <- stats::quantile(fit_data[, x], x_percentiles)
+        x_lo <- x_percs[1]
+        x_hi <- x_percs[2]
+        if (standardized) {
+            x_lo <- (x_lo - x_mean_raw) / x_sd_raw
+            x_hi <- (x_hi - x_mean_raw) / x_sd_raw
+          }
+      }
+    if (w_method == "sd") {
+        w_lo <- w_mean - w_from_mean_in_sd * w_sd
+        w_hi <- w_mean + w_from_mean_in_sd * w_sd
+      } else {
+        w_percs <- stats::quantile(fit_data[, w], w_percentiles)
+        w_lo <- w_percs[1]
+        w_hi <- w_percs[2]
+        if (standardized) {
+            w_lo <- (w_lo - w_mean_raw) / w_sd_raw
+            w_hi <- (w_hi - w_mean_raw) / w_sd_raw
+          }
+      }
     dat_plot <- data.frame(w = c("Low", "High"),
                            a = c(a_shift + bw * w_lo,
                                  a_shift + bw * w_hi),
@@ -182,9 +248,16 @@ plotmod <- function(fit, y, x, w, xw,
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "High", "b"])
                      )
-      cap_txt <- paste0("Low: ", w_from_mean_in_sd,
-                        "SD below mean; Hi: ",
-                        w_from_mean_in_sd, " SD above mean")
+    if (w_method == "percentile") {
+        cap_txt <- paste0("Low: ", 100 * w_percentiles[1],
+                          "th percentile; Hi: ",
+                          100*w_percentiles[2], "th percentile")
+      }
+    if (w_method == "sd") {
+        cap_txt <- paste0("Low: ", w_from_mean_in_sd,
+                          "SD below mean; Hi: ",
+                          w_from_mean_in_sd, " SD above mean")
+      }
     ggplot2::ggplot() +
       ggplot2::scale_x_continuous(name = x_label,
                                   limits = c(x_lo - expansion * x_range,

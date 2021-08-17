@@ -7,6 +7,11 @@
 - Added `x_from_mean_in_sd` and `w_from_mean_in_sd` to `plotmod`. Users can 
   define `high` and `low` in terms of SD. Defaults are 1.
 
+- Added `x_method`, `w_method`, `x_percentiles` and `w_percentiles` to `plotmod`.
+  Users can define "high" and "low" in terms of percentiles for the moderator
+  by setting `w_method = "percentile"` (for the focal variable, set 
+  `x_method = "percentile"`).
+
 # plotmodsem 0.0.2
 
 ## New Features
