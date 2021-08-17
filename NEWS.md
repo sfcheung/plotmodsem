@@ -4,6 +4,9 @@
 
 - `plotmod` accepts unquoted names. E.g., `x = iv` and `x = "iv"` both works.
 
+- Added `x_from_mean_in_sd` and `w_from_mean_in_sd` to `plotmod`. Users can 
+  define `high` and `low` in terms of SD. Defaults are 1.
+
 # plotmodsem 0.0.2
 
 ## New Features

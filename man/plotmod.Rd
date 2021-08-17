@@ -17,7 +17,9 @@ plotmod(
   a_shift = 0,
   expansion = 0.1,
   standardized = FALSE,
-  digits = 3
+  digits = 3,
+  x_from_mean_in_sd = 1,
+  w_from_mean_in_sd = 1
 )
 }
 \arguments{
@@ -58,6 +60,12 @@ variables, \code{x}, \code{w}, and \code{y} will be standardized. Default
 is \code{FALSE}}
 
 \item{digits}{Number of decimal digits to print. Default is 3.}
+
+\item{x_from_mean_in_sd}{How many SD from mean is used to define "low" and
+"high" for the focal variable. Default is 1.}
+
+\item{w_from_mean_in_sd}{How many SD from mean is used to define "low" and
+"high" for the moderator. Default is 1.}
 }
 \value{
 A \link{ggplot2} graph.

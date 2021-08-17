@@ -37,6 +37,10 @@
 #'                     variables, `x`, `w`, and `y` will be standardized. Default
 #'                     is `FALSE`
 #' @param digits Number of decimal digits to print. Default is 3.
+#' @param x_from_mean_in_sd How many SD from mean is used to define "low" and
+#'                          "high" for the focal variable. Default is 1.
+#' @param w_from_mean_in_sd How many SD from mean is used to define "low" and
+#'                          "high" for the moderator. Default is 1.
 #'
 #' @examples
 #' \dontrun{
@@ -52,7 +56,9 @@ plotmod <- function(fit, y, x, w, xw,
                             a_shift = 0,
                             expansion = .1,
                             standardized = FALSE,
-                            digits = 3
+                            digits = 3,
+                            x_from_mean_in_sd = 1,
+                            w_from_mean_in_sd = 1
                     ) {
     if (!lavaan::lavInspect(fit, "meanstructure")) {
         stop("The fitted model does no have interecepts (meanstructure).")
@@ -149,10 +155,10 @@ plotmod <- function(fit, y, x, w, xw,
         bw <- bw_raw
         bxw <- bxw_raw
       }
-    x_lo <- x_mean - x_sd
-    x_hi <- x_mean + x_sd
-    w_lo <- w_mean - w_sd
-    w_hi <- w_mean + w_sd
+    x_lo <- x_mean - x_from_mean_in_sd * x_sd
+    x_hi <- x_mean + x_from_mean_in_sd * x_sd
+    w_lo <- w_mean - w_from_mean_in_sd * w_sd
+    w_hi <- w_mean + w_from_mean_in_sd * w_sd
     dat_plot <- data.frame(w = c("Low", "High"),
                            a = c(a_shift + bw * w_lo,
                                  a_shift + bw * w_hi),
@@ -176,6 +182,9 @@ plotmod <- function(fit, y, x, w, xw,
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "High", "b"])
                      )
+      cap_txt <- paste0("Low: ", w_from_mean_in_sd,
+                        "SD below mean; Hi: ",
+                        w_from_mean_in_sd, " SD above mean")
     ggplot2::ggplot() +
       ggplot2::scale_x_continuous(name = x_label,
                                   limits = c(x_lo - expansion * x_range,
@@ -191,6 +200,6 @@ plotmod <- function(fit, y, x, w, xw,
                                          size = 1) +
       ggplot2::labs(title = title,
                     subtitle = subtxt,
-                    caption = "Low: 1 SD below mean; Hi: 1 SD above mean") +
+                    caption = cap_txt) +
       ggplot2::theme(axis.text.y = ggplot2::element_blank())
   }
