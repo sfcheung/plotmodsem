@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotmodsem</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
@@ -109,20 +109,35 @@
       
     </div>
 
+    <div id="plotmodsem-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#plotmodsem-003" class="anchor"></a>plotmodsem 0.0.3</h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New Features</h2>
+<ul>
+<li><p><code>plotmod</code> accepts unquoted names. E.g., <code>x = iv</code> and <code>x = "iv"</code> both works.</p></li>
+<li><p>Added <code>x_from_mean_in_sd</code> and <code>w_from_mean_in_sd</code> to <code>plotmod</code>. Users can define <code>high</code> and <code>low</code> in terms of SD. Defaults are 1.</p></li>
+<li><p>Added <code>x_method</code>, <code>w_method</code>, <code>x_percentiles</code> and <code>w_percentiles</code> to <code>plotmod</code>. Users can define “high” and “low” in terms of percentiles for the moderator by setting <code>w_method = "percentile"</code> (for the focal variable, set <code>x_method = "percentile"</code>).</p></li>
+<li><p>Added <code>x_sd_to_percentiles</code> and <code>w_sd_to_percentiles</code> to <code>plotmod</code>. If percentiles are used to define “high” and “low”, users can set <code>x_sd_to_percentiles</code> and/or <code>w_sd_to_percentiles</code> to find the percentiles using a number of SD above or below mean in a normal distribution.</p></li>
+<li><p>Added <code>plot_x_vlines</code> and <code>x_vlines_unit</code> to <code>plotmod</code>. Users can add one or more vertical lines for selected level of the focal variables. The levels can be specified as deviation from mean in SD or percentiles.</p></li>
+</ul>
+</div>
+</div>
     <div id="plotmodsem-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
 <a href="#plotmodsem-002" class="anchor"></a>plotmodsem 0.0.2</h1>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
+<a href="#new-features-1" class="anchor"></a>New Features</h2>
 <ul>
-<li><p>Can plot the moderaiton effect in standardized metric. The pattern of lines is the same, standardized or not, but the scales are different.</p></li>
+<li><p>Can plot the moderation effect in standardized metric. The pattern of lines is the same, standardized or not, but the scales are different.</p></li>
 <li><p>Print the conditional effects as a subtitle.</p></li>
 </ul>
 </div>
 <div id="bug-fix" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fix" class="anchor"></a>Bug fix</h2>
+<a href="#bug-fix" class="anchor"></a>Bug Fix</h2>
 <ul>
 <li><p>Fix the bug that variances instead of standard deivations are retrieved.</p></li>
 <li><p>Fix the bug that SDs and means are retrieved from the parameter tables. This will not work if the focal variable or the moderator is an endogenous variable and so its mean and variance are not free parameters. The implied means are SDs are now used.</p></li>
