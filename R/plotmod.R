@@ -192,12 +192,12 @@ plotmod <- function(fit, y, x, w, xw,
     if (missing(y_label)) y_label <- y
     if (missing(title)) {
         if (standardized) {
-            title <- paste0("The Moderation Effect of ", w,
-                            " on ", x, "'s effect on ", y,
+            title <- paste0("The Moderation Effect of ", w_label,
+                            " on ", x_label, "'s effect on ", y_label,
                             " (Standardized)")
           } else {
-            title <- paste0("The Moderation Effect of ", w,
-                            " on ", x, "'s effect on ", y)
+            title <- paste0("The Moderation Effect of ", w_label,
+                            " on ", x_label, "'s effect on ", y_label)
           }
       }
     if (missing(xw)) {
