@@ -261,7 +261,7 @@ plotmod <- function(fit, y, x, w, xw,
         x_lo <- x_mean - x_from_mean_in_sd * x_sd
         x_hi <- x_mean + x_from_mean_in_sd * x_sd
       } else {
-        x_percs <- stats::quantile(fit_data[, x], x_percentiles)
+        x_percs <- stats::quantile(fit_data[, x], x_percentiles, na.rm = TRUE)
         x_lo <- x_percs[1]
         x_hi <- x_percs[2]
         if (standardized) {
@@ -273,7 +273,7 @@ plotmod <- function(fit, y, x, w, xw,
         w_lo <- w_mean - w_from_mean_in_sd * w_sd
         w_hi <- w_mean + w_from_mean_in_sd * w_sd
       } else {
-        w_percs <- stats::quantile(fit_data[, w], w_percentiles)
+        w_percs <- stats::quantile(fit_data[, w], w_percentiles, na.rm = TRUE)
         w_lo <- w_percs[1]
         w_hi <- w_percs[2]
         if (standardized) {
@@ -338,7 +338,8 @@ plotmod <- function(fit, y, x, w, xw,
             x_vline_levels <- plot_x_vlines * x_sd + x_mean
           }
         if (x_vlines_unit == "percentile") {
-            x_vline_levels <- stats::quantile(fit_data[, x], plot_x_vlines)
+            x_vline_levels <- stats::quantile(fit_data[, x], plot_x_vlines,
+                                                na.rm = TRUE)
             if (standardized) {
                 x_vline_levels <- (x_vline_levels - x_mean_raw) / x_sd_raw
               }
