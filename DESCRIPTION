@@ -1,6 +1,6 @@
 Package: plotmodsem
 Title: Plotting moderation effects in path models
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     c(
       person(given = "Shu Fai",
