@@ -9,7 +9,7 @@
 #' [plotmod()]
 #'
 #' @docType package
-#' @name semlbci-package
+#' @name plotmodsem-package
 #'
 NULL
 

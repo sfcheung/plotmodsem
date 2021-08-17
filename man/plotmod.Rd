@@ -24,14 +24,21 @@ plotmod(
 \item{fit}{The output from \link[lavaan:lavaan]{lavaan::lavaan} or its wrapper, such as
 \link[lavaan:sem]{lavaan::sem}.}
 
-\item{y}{Character. The name of the outcome variable as in the data set in \code{fit}.}
+\item{y}{The name of the outcome variable as in the data set in \code{fit}. It
+can be the name of the variable, with or without quotes.}
 
-\item{x}{Character. The name of the focal variable as in the data set in \code{fit}.}
+\item{x}{The name of the focal variable as in the data set in
+It
+can be the name of the variable, with or without quotes.\code{fit}.}
 
-\item{w}{Character. The name of the moderator as in the data set in \code{fit}.}
+\item{w}{The name of the moderator as in the data set in \code{fit}.
+It
+can be the name of the variable, with or without quotes.}
 
-\item{xw}{Charcter. The name of the product term, \code{x * w}. If not supplied,
-The function will try to find it in the data set.}
+\item{xw}{The name of the product term, \code{x * w}. If not supplied,
+The function will try to find it in the data set.
+It
+can be the name of the variable, with or without quotes.}
 
 \item{x_label}{The label for the X-axis. Default is the vlaues of \code{x}.}
 
