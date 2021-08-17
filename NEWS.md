@@ -1,13 +1,19 @@
+# plotmodsem 0.0.3
+
+## New Features
+
+- `plotmod` accepts unquoted names. E.g., `x = iv` and `x = "iv"` both works.
+
 # plotmodsem 0.0.2
 
-## New features
+## New Features
 
-- Can plot the moderaiton effect in standardized metric. The pattern of lines
+- Can plot the moderation effect in standardized metric. The pattern of lines
   is the same, standardized or not, but the scales are different.
 
 - Print the conditional effects as a subtitle.
 
-## Bug fix
+## Bug Fix
 
 - Fix the bug that variances instead of standard deivations are retrieved.
 
