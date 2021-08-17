@@ -21,6 +21,10 @@
   one or more vertical lines for selected level of the focal variables.
   The levels can be specified as deviation from mean in SD or percentiles.
 
+## Bug Fix
+
+- Fix the bug that labels are not used in forming the title.
+
 # plotmodsem 0.0.2
 
 ## New Features
