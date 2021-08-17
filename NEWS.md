@@ -12,6 +12,11 @@
   by setting `w_method = "percentile"` (for the focal variable, set 
   `x_method = "percentile"`).
 
+- Added `x_sd_to_percentiles` and `w_sd_to_percentiles` to `plotmod`.
+  If percentiles are used to define "high" and "low", users can set 
+  `x_sd_to_percentiles` and/or `w_sd_to_percentiles` to find the percentiles 
+  using a number of SD above or below mean in a normal distribution.
+
 # plotmodsem 0.0.2
 
 ## New Features

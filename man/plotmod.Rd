@@ -19,7 +19,11 @@ plotmod(
   standardized = FALSE,
   digits = 3,
   x_from_mean_in_sd = 1,
-  w_from_mean_in_sd = 1
+  w_from_mean_in_sd = 1,
+  w_method = "sd",
+  w_percentiles = c(0.16, 0.84),
+  x_method = "sd",
+  x_percentiles = c(0.16, 0.84)
 )
 }
 \arguments{
@@ -66,6 +70,36 @@ is \code{FALSE}}
 
 \item{w_from_mean_in_sd}{How many SD from mean is used to define "low" and
 "high" for the moderator. Default is 1.}
+
+\item{w_method}{How to define "high" and "low" for the moderator levels.
+Default is in terms of the
+standard deviation of the moderator, "sd". If equal to
+"percentile", then percentiles of the moderator in the
+dataset is used.}
+
+\item{w_percentiles}{If \code{w_method} is \code{percentile}, then this argument
+specifies the two percentiles to be used, divided by 100.
+It must be a
+vector of two numbers. The default is \code{c(.16, .84)},
+the 16th and 84th percentiles,
+which corresponds approximately
+to one SD below and above mean for a
+normal distributoin, respectively.}
+
+\item{x_method}{How to define "high" and "low" for the focal variable levels.
+Default is in terms of the
+standard deviation of the focal variable, "sd". If equal to
+"percentile", then percentiles of the focal variable in the
+dataset is used.}
+
+\item{x_percentiles}{If \code{x_method} is \code{percentile}, then this argument
+specifies the two percentiles to be used, divided by 100.
+It must be a
+vector of two numbers. The default is \code{c(.16, .84)},
+the 16th and 84th percentiles,
+which corresponds approximately
+to one SD below and above mean for a
+normal distributoin, respectively.}
 }
 \value{
 A \link{ggplot2} graph.

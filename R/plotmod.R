@@ -67,6 +67,30 @@
 #'                      which corresponds approximately
 #'                      to one SD below and above mean for a
 #'                      normal distributoin, respectively.
+#' @param w_sd_to_percentiles If `w_method` is `percentile` and this argument is
+#'                            set to a number, this number will be used to
+#'                            to determine the percentiles to be used. The
+#'                            lower percentile is the percentile in a normal
+#'                            distribution
+#'                            that is `w_sd_to_percentiles` SD below the mean.
+#'                            The upper percentile is the percentil in a normal
+#'                            distribution that is `w_sd_to_percentiles` SD
+#'                            above the mean. Therefore, if
+#'                            `w_sd_to_percentiles` is set to 1, then the lower
+#'                            and upper percentiles are 16th and 84th,
+#'                            respectively.
+#' @param x_sd_to_percentiles If `x_method` is `percentile` and this argument is
+#'                            set to a number, this number will be used to
+#'                            to determine the percentiles to be used. The
+#'                            lower percentile is the percentile in a normal
+#'                            distribution
+#'                            that is `x_sd_to_percentiles` SD below the mean.
+#'                            The upper percentile is the percentil in a normal
+#'                            distribution that is `x_sd_to_percentiles` SD
+#'                            above the mean. Therefore, if
+#'                            `x_sd_to_percentiles` is set to 1, then the lower
+#'                            and upper percentiles are 16th and 84th,
+#'                            respectively.
 #'
 #' @examples
 #' \dontrun{
@@ -88,7 +112,9 @@ plotmod <- function(fit, y, x, w, xw,
                             w_method = "sd",
                             w_percentiles = c(.16, .84),
                             x_method = "sd",
-                            x_percentiles = c(.16, .84)
+                            x_percentiles = c(.16, .84),
+                            w_sd_to_percentiles,
+                            x_sd_to_percentiles
                     ) {
     w_method <- tolower(w_method)
     if (!w_method %in% c("sd", "percentile")) {
@@ -98,6 +124,14 @@ plotmod <- function(fit, y, x, w, xw,
         if (inherits(tryCatch(fit_data <- lavaan::lavInspect(fit, "data"),
                               error = function(e) e), "simpleError")) {
             stop('w_method and/or x_method = "percentile" but raw data cannot be retrieved from fit.')
+          }
+        if (!missing(w_sd_to_percentiles)) {
+            w_percentiles <- c(stats::pnorm(-1 * abs(w_sd_to_percentiles)),
+                               stats::pnorm(abs(w_sd_to_percentiles)))
+          }
+        if (!missing(x_sd_to_percentiles)) {
+            x_percentiles <- c(stats::pnorm(-1 * abs(x_sd_to_percentiles)),
+                               stats::pnorm(abs(x_sd_to_percentiles)))
           }
         if (w_percentiles[1] > w_percentiles[2]) {
             stop("The first perecentile in w_percentiles is higher than the second percentile.")
