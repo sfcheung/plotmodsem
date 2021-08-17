@@ -25,6 +25,8 @@
 
 - Fix the bug that labels are not used in forming the title.
 
+- Fix the bug that NAs are not removed in computing percentiles.
+
 # plotmodsem 0.0.2
 
 ## New Features
