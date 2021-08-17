@@ -14,11 +14,18 @@
 #'
 #' @param fit The output from [lavaan::lavaan] or its wrapper, such as
 #'            [lavaan::sem].
-#' @param y Character. The name of the outcome variable as in the data set in `fit`.
-#' @param x Character. The name of the focal variable as in the data set in `fit`.
-#' @param w Character. The name of the moderator as in the data set in `fit`.
-#' @param xw Charcter. The name of the product term, `x * w`. If not supplied,
+#' @param y The name of the outcome variable as in the data set in `fit`. It
+#'          can be the name of the variable, with or without quotes. 
+#' @param x The name of the focal variable as in the data set in
+#'           It
+#'          can be the name of the variable, with or without quotes.`fit`.
+#' @param w The name of the moderator as in the data set in `fit`.
+#'           It
+#'          can be the name of the variable, with or without quotes.
+#' @param xw The name of the product term, `x * w`. If not supplied,
 #'           The function will try to find it in the data set.
+#'             It
+#'          can be the name of the variable, with or without quotes.
 #' @param x_label The label for the X-axis. Default is the vlaues of `x`.
 #' @param w_label The label for the legend for the lines. Default is the value of`w`.
 #' @param y_label The label for the Y-axis. Default is the value of `y`.
@@ -50,6 +57,28 @@ plotmod <- function(fit, y, x, w, xw,
     if (!lavaan::lavInspect(fit, "meanstructure")) {
         stop("The fitted model does no have interecepts (meanstructure).")
       }
+    x0 <- deparse(substitute(x))
+    if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
+                 "simpleError")) {
+        x <- x0
+      } else {
+        x <- x00
+      }
+    w0 <- deparse(substitute(w))
+    if (inherits(tryCatch(w00 <- as.character(w), error = function(e) e),
+                 "simpleError")) {
+        w <- w0
+      } else {
+        w <- w00
+      }
+    y0 <- deparse(substitute(y))
+    if (inherits(tryCatch(y00 <- as.character(y), error = function(e) e),
+                 "simpleError")) {
+        y <- y0
+      } else {
+        y <- y00
+      }
+    if (!is.character(y)) y <- y0
     if (missing(x_label)) x_label <- x
     if (missing(w_label)) w_label <- w
     if (missing(y_label)) y_label <- y
@@ -83,6 +112,14 @@ plotmod <- function(fit, y, x, w, xw,
             stop("xw was not supplied but more than one possible product term was found.")
           }
         xw <- names(tmp[tmp])
+      } else {
+        xw0 <- deparse(substitute(xw))
+        if (inherits(tryCatch(xw00 <- as.character(xw), error = function(e) e),
+                    "simpleError")) {
+            xw <- xw0
+          } else {
+            xw <- xw00
+          }
       }
     par_t <- lavaan::parameterEstimates(fit)
     x_sd_raw <- sqrt(lavaan::lavInspect(fit, "cov.ov")[x, x])
