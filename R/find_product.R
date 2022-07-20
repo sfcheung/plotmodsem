@@ -1,5 +1,5 @@
 
-#' @title Find product terms
+#' @title Find Product Terms
 #'
 #' @description Find columns in a data frame or matrix that are the products
 #'              of two or more other columns.
@@ -11,16 +11,16 @@
 #'          but there is no guarantee.
 #'
 #' @return
-#'  [find_all_products] returns a named list. For each element, the name is the
+#' [find_all_products()] returns a named list. For each element, the name is the
 #'  column name of a product
 #'  term, and the content
 #'  is a vector of the names of the columns used for form the product term.
-#'  If no column is a product of other column, it returns a names list of zero 
+#'  If no column is a product of other column, it returns a names list of zero
 #'  length.
 #'
-#'  [find_product] returns a vector of two elements. If the target column is a product
-#'  of two other columns, this vector contains the names of these two columsn.
-#'  Otherwise, this is a vector of `NA`s.
+#'  [find_product()] returns a vector of two elements. If the target
+#'  column is a product of two other columns, this vector contains the
+#'  names of these two columns. Otherwise, this is a vector of `NA`s.
 #'
 #' @param data The data frame to be searched.
 #' @param target The column to be checked if it is a product of other columns.
