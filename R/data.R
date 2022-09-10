@@ -16,6 +16,7 @@
 #'
 #' @examples
 #' library(lavaan)
+#' library(ggplot2)
 #' dat <- sample_mod_sem
 #' dat$x1x2 <- dat$x1 * dat$x2
 #' mod <-
@@ -25,11 +26,16 @@
 #' y1 ~ m1 + x1
 #' y2 ~ m1 + m2
 #' x2 ~ x2mean * 1
-#' x2 ~~ x2sd * x2
-#' x1_low := bx1 + bx1x2 * (x2mean - x2sd)
-#' x1_hih := bx1 + bx1x2 * (x2mean + x2sd)
+#' m2 ~ m2intercept * 1
+#' x2 ~~ x2v * x2
+#' bx1_lo := bx1 + bx1x2 * (x2mean - sqrt(x2v))
+#' bx1_hi := bx1 + bx1x2 * (x2mean + sqrt(x2v))
+#' b0_lo := m2intercept + bx2 * (x2mean - sqrt(x2v))
+#' b0_hi := m2intercept + bx2 * (x2mean + sqrt(x2v))
 #' "
 #' fit <- sem(model = mod, data = dat, meanstructure = TRUE, fixed.x = FALSE)
 #' parameterEstimates(fit)
-#' plotmod(fit, y = "m2", x = "x1", w = "x2", xw = "x1x2")
+#' p <- plotmod(fit, y = "m2", x = "x1", w = "x2", xw = "x1x2",
+#'              a_shift = coef(fit)["m2intercept"])
+#' p
 "sample_mod_sem"

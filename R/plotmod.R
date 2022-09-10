@@ -333,8 +333,8 @@ plotmod <- function(fit, y, x, w, xw,
                                          size = 1) +
       ggplot2::labs(title = title,
                     subtitle = subtxt,
-                    caption = cap_txt) +
-      ggplot2::theme(axis.text.y = ggplot2::element_blank())
+                    caption = cap_txt)
+      # ggplot2::theme(axis.text.y = ggplot2::element_blank())
     if (!missing(plot_x_vlines)) {
         if (x_vlines_unit == "sd") {
             x_vline_levels <- plot_x_vlines * x_sd + x_mean
