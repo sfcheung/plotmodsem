@@ -31,11 +31,8 @@
 #' \dontrun{
 #' # To be prepared
 #' }
-#'@name find_product
-NULL
+#'@noRd
 
-#'@rdname find_product
-#'@export
 
 find_product <- function(data, target) {
     a_col <- data[, target]
@@ -58,8 +55,8 @@ find_product <- function(data, target) {
     out
   }
 
-#'@rdname find_product
-#'@export
+#'@noRd
+
 
 find_all_products <- function(data, expand = TRUE) {
     out <- sapply(colnames(data),
@@ -73,6 +70,8 @@ find_all_products <- function(data, expand = TRUE) {
     out
   }
 
+#'@noRd
+
 expand2lower_i <- function(x, full_list) {
     to_append <- NULL
     for (y in seq_len(length(x))) {
@@ -83,6 +82,8 @@ expand2lower_i <- function(x, full_list) {
       }
     c(x, to_append)
   }
+
+#'@noRd
 
 expand2lower <- function(full_list) {
     out <- full_list

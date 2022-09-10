@@ -2,12 +2,14 @@
 % Please edit documentation in R/plotmodsem-package.R
 \docType{package}
 \name{plotmodsem-package}
+\alias{plotmodsem}
 \alias{plotmodsem-package}
 \title{plotmodsem: Plotting moderation effects in path models}
 \description{
-Plot the selected moderation effect in a path model fitted by an
-'             structural equation modeling package (e.g., lavaan)
+Plot the selected moderation effect in a path model fitted by an structural equation modeling package (e.g., 'lavaan').
 }
-\seealso{
-\code{\link[=plotmod]{plotmod()}}
+\author{
+\strong{Maintainer}: Shu Fai Cheung \email{shufai.cheung@gmail.com} (\href{https://orcid.org/0000-0002-9871-9448}{ORCID})
+
 }
+\keyword{internal}

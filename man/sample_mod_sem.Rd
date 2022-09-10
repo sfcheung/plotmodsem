@@ -5,23 +5,40 @@
 \alias{sample_mod_sem}
 \title{Sample dataset for testing}
 \format{
-An object of class \code{data.frame} with 500 rows and 6 columns.
+A data frame with 300 rows
+and 5 variables:
+\describe{
+\item{x1}{Predictor. Numeric.}
+\item{x2}{Moderator. Numeric}
+\item{m1}{Mediator. Numeric.}
+\item{m2}{Mediator. Numeric.}
+\item{y1}{Outcome variable. Numeric.}
+\item{y2}{Outcome variable. Numeric.}
+}
 }
 \usage{
 sample_mod_sem
 }
 \description{
-A data set with six variables, x1, x2, m1, m2, y.
+A data set with 500 cases and six variables, x1, x2, m1, m2, y.
 }
-\details{
-Fit the following model:
-
-#mod <-
-#"
-#m1 ~ x1 + x2
-#m2 ~ x1 + x2 + x1x2
-#y1 ~ m1 + x1
-#y2 ~ m1 + m2
-#"
+\examples{
+library(lavaan)
+dat <- sample_mod_sem
+dat$x1x2 <- dat$x1 * dat$x2
+mod <-
+"
+m1 ~ x1 + x2
+m2 ~ bx1 * x1 + bx2 * x2 + bx1x2 * x1x2
+y1 ~ m1 + x1
+y2 ~ m1 + m2
+x2 ~ x2mean * 1
+x2 ~~ x2sd * x2
+x1_low := bx1 + bx1x2 * (x2mean - x2sd)
+x1_hih := bx1 + bx1x2 * (x2mean + x2sd)
+"
+fit <- sem(model = mod, data = dat, meanstructure = TRUE, fixed.x = FALSE)
+parameterEstimates(fit)
+plotmod(fit, y = "m2", x = "x1", w = "x2", xw = "x1x2")
 }
 \keyword{datasets}
