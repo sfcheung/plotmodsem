@@ -45,6 +45,6 @@ fit <- sem(model = mod, data = dat, meanstructure = TRUE, fixed.x = FALSE)
 parameterEstimates(fit)
 p <- plotmod(fit, y = "m2", x = "x1", w = "x2", xw = "x1x2",
              a_shift = coef(fit)["m2intercept"])
-p + xlim(0, 3.5)
+p
 }
 \keyword{datasets}
