@@ -1,3 +1,11 @@
+# plotmodsem 0.0.4.1
+
+## Miscellaneous
+
+- Customized `linter`.
+- Update to use `linewidth` in `ggplot2`
+  when appropriate.
+
 # plotmodsem 0.0.4
 
 ## Maintenance Release

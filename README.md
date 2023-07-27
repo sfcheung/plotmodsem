@@ -5,7 +5,7 @@
 [![Last Commit at master](https://img.shields.io/github/last-commit/sfcheung/plotmodsem.svg)](https://github.com/sfcheung/plotmodsem/commits/master)
 <!-- badges: end -->
 
-(Version 0.0.4, updated on 2022-09-10, [release history](https://sfcheung.github.io/plotmodsem/news/index.html))
+(Version 0.0.4.1, updated on 2023-07-27, [release history](https://sfcheung.github.io/plotmodsem/news/index.html))
 
 # plotmodsem
 
