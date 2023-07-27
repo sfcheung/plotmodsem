@@ -330,7 +330,7 @@ plotmod <- function(fit, y, x, w, xw,
                   mapping = ggplot2::aes(slope = b,
                                          intercept = a,
                                          linetype = factor(w)),
-                                         size = 1) +
+                                         linewidth = 1) +
       ggplot2::labs(title = title,
                     subtitle = subtxt,
                     caption = cap_txt)
@@ -350,7 +350,7 @@ plotmod <- function(fit, y, x, w, xw,
             out <- out + ggplot2::geom_vline(
                           xintercept = i,
                           linetype = "dotted",
-                          size = .5)
+                          linewidth = .5)
             out <- out + ggplot2::annotate(
                           "text",
                           x = i,
