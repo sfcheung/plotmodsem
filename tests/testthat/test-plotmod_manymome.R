@@ -1,4 +1,4 @@
-skip("WIP")
+skip_if_not_installed("lavaan")
 library(lavaan)
 library(manymome)
 
@@ -16,15 +16,15 @@ m3 ~ m1 + x + gpgp2 + gpgp3 + x:gpgp2 + x:gpgp3
 y ~ m2 + m3 + x
 "
 fit <- sem(mod, dat, meanstructure = TRUE, fixed.x = FALSE)
-plotmod_new(fit,
-            wlevels = list(c("gpgp2", "gpgp3")),
-            y = "m3",
-            x = "x")
-plotmod_new(fit,
-            wlevels = list(c("gpgp2", "gpgp3")),
-            y = "m3",
-            x = "x",
-            graph_type = "tumble")
+plotmod(fit,
+        wlevels = list(c("gpgp2", "gpgp3")),
+        y = "m3",
+        x = "x")
+plotmod(fit,
+        wlevels = list(c("gpgp2", "gpgp3")),
+        y = "m3",
+        x = "x",
+        graph_type = "tumble")
 
 # Numeric moderator
 
@@ -36,12 +36,12 @@ y ~ m3 + x
 "
 fit2 <- sem(mod2, dat, meanstructure = TRUE, fixed.x = FALSE)
 
-plotmod_new(fit2,
-            wlevels = "w1",
-            y = "m3",
-            x = "x")
-plotmod_new(fit2,
-            wlevels = "w1",
-            y = "m3",
-            x = "x",
-            graph_type = "tumble")
+plotmod(fit2,
+        wlevels = "w1",
+        y = "m3",
+        x = "x")
+plotmod(fit2,
+        wlevels = "w1",
+        y = "m3",
+        x = "x",
+        graph_type = "tumble")

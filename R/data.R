@@ -15,8 +15,8 @@
 #' }
 #'
 #' @examples
+#' if (requireNamespace("lavaan")) {
 #' library(lavaan)
-#' library(ggplot2)
 #' dat <- sample_mod_sem
 #' dat$x1x2 <- dat$x1 * dat$x2
 #' mod <-
@@ -33,9 +33,15 @@
 #' b0_lo := m2intercept + bx2 * (x2mean - sqrt(x2v))
 #' b0_hi := m2intercept + bx2 * (x2mean + sqrt(x2v))
 #' "
-#' fit <- sem(model = mod, data = dat, meanstructure = TRUE, fixed.x = FALSE)
+#' fit <- sem(model = mod,
+#'            data = dat,
+#'            meanstructure = TRUE,
+#'            fixed.x = FALSE)
 #' parameterEstimates(fit)
-#' p <- plotmod(fit, y = "m2", x = "x1", w = "x2", xw = "x1x2",
-#'              a_shift = coef(fit)["m2intercept"])
+#' p <- plotmod(fit,
+#'              y = "m2",
+#'              x = "x1",
+#'              wlevels = "x2")
 #' p
+#' }
 "sample_mod_sem"

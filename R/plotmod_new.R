@@ -6,16 +6,18 @@
 #'
 #' @details This function extracts the
 #' information stored in the `lavaan`
-#' fit object to plot a two-line graph,
+#' fit object to plot a line graph,
 #' one for the relation between the
 #' focal variable (`x`) and the outcome
-#' variable (`y`) when the moderator
-#' (`w`) is one standard deviation below
-#' mean, and one when the moderator is
-#' one standard deviation above mean.
+#' variable (`y`) for each level of
+#' the moderator
+#' (`w`).
+#'
+#' It calls several functions from
+#' the package `manymome` internally.
 #'
 #' @return
-#' A [ggplot2] graph.
+#' A `ggplot2` graph.
 #'
 #' @param fit The fit object. Can be a
 #' [lavaan::lavaan-class] object or a
@@ -205,18 +207,18 @@
 #'
 #' @param line_width The width of the
 #' lines as used in
-#' [ggplot2::geom_segment()]. Default is
+#' `ggplot2::geom_segment()`. Default is
 #' 1.
 #'
 #' @param point_size The size of the
 #' points as used in
-#' [ggplot2::geom_point()]. Default is
+#' `ggplot2::geom_point()`. Default is
 #' 5.
 #'
 #' @param graph_type If `"default"`, the
 #' typical line-graph with equal
 #' end-points will be plotted. If
-#' `"tubmle"`, then the tumble graph
+#' `"tumble"`, then the tumble graph
 #' proposed by Bodner (2016) will be
 #' plotted. Default is `"default"`.
 #'
@@ -230,7 +232,7 @@
 #' }
 #' @export
 
-plotmod_new <- function(fit,
+plotmod <- function(fit,
                         x,
                         y,
                         wlevels,
